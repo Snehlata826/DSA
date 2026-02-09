@@ -1,0 +1,29 @@
+1382. Balance a Binary Search Tree
+Given the root of a binary search tree, return a balanced binary search tree with the same node values. If there is more than one answer, return any of them.
+
+A binary search tree is balanced if the depth of the two subtrees of every node never differs by more than 1.
+
+class Solution:
+    def balanceBST(self, root: Optional[TreeNode]) -> Optional[TreeNode]:
+        nodes=[]
+        def inorder(node):
+            if not node:
+                return 
+            inorder(node.left)
+            nodes.append(node.val)
+            inorder(node.right)
+        inorder(root)
+        def build(l,r):
+            if l>r:
+                return 
+            mid=(l+r)//2
+            root=TreeNode(nodes[mid])
+            root.left=build(l,mid-1)
+            root.right=build(mid+1,r)
+            return root
+
+        return build(0,len(nodes)-1)
+
+
+      
+
