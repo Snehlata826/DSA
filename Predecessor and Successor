@@ -1,0 +1,53 @@
+Predecessor and Successor
+Difficulty: MediumAccuracy: 47.36%Submissions: 187K+Points: 4
+You are given the root of a BST and an integer key. You need to find the inorder predecessor and successor of the given key. If either predecessor or successor is not found, then set it to NULL.
+
+Note: In an inorder traversal the number just smaller than the target is the predecessor and the number just greater than the target is the successor. 
+
+Code 
+'''
+class Node:
+    def __init__(self, data):
+        self.data = data
+        self.left = None
+        self.right = None
+'''
+class Solution:
+    def findPreSuc(self, root, key):
+        pre = None
+        suc = None
+        
+        curr = root
+        
+        while curr:
+            
+            # Case 1: Key found
+            if curr.data == key:
+                
+                # Find predecessor (max in left subtree)
+                if curr.left:
+                    temp = curr.left
+                    while temp.right:
+                        temp = temp.right
+                    pre = temp
+                
+                # Find successor (min in right subtree)
+                if curr.right:
+                    temp = curr.right
+                    while temp.left:
+                        temp = temp.left
+                    suc = temp
+                
+                break
+            
+            # Case 2: key smaller → go left
+            elif key < curr.data:
+                suc = curr
+                curr = curr.left
+            
+            # Case 3: key greater → go right
+            else:
+                pre = curr
+                curr = curr.right
+        
+        return pre, suc
